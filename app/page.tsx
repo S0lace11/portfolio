@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Navigation from '@/components/Navigation'
 import SocialLinks from '@/components/SocialLinks'
 import ProjectCard from '@/components/ui/ProjectCard'
@@ -18,7 +17,7 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row items-start justify-between">
             <div className="flex-1 mb-8 lg:mb-0">
               <h1 className="text-5xl font-bold mb-4" style={{ color: '#ff4566' }}>
-                Hi, I'm Q1Hang 👋
+                Hi, I&apos;m Q1Hang 👋
               </h1>
               <p className="text-xl text-primary-500 mb-8">
                 Interested in everything about AI
