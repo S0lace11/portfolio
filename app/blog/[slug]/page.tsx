@@ -7,9 +7,9 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { Clock, Calendar, ArrowLeft, Tag } from 'lucide-react'
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 // 生成静态参数
@@ -22,7 +22,8 @@ export async function generateStaticParams() {
 
 // 生成动态SEO元数据
 export async function generateMetadata({ params }: Props) {
-  const post = getPostBySlug(params.slug)
+  const { slug } = await params
+  const post = getPostBySlug(slug)
   
   if (!post) {
     return {
@@ -50,8 +51,9 @@ export async function generateMetadata({ params }: Props) {
   }
 }
 
-export default function BlogPostPage({ params }: Props) {
-  const post = getPostBySlug(params.slug)
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params
+  const post = getPostBySlug(slug)
 
   if (!post) {
     notFound()
