@@ -9,14 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/prismjs": "^1.26.5",
+    "clsx": "^2.1.1",
+    "gray-matter": "^4.0.3",
     "lucide-react": "^0.515.0",
     "next": "15.3.3",
+    "next-mdx-remote": "^5.0.0",
+    "prismjs": "^1.30.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

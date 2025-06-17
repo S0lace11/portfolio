@@ -11,14 +11,14 @@ export const projects: Project[] = [
   {
     id: 1,
     title: 'Transcribe & Read Aloud',
-    description: 'A Web application based on Flask that can convert video content into text and achieve real-time synchronization and joint display between video playback',
+    description: 'Video content transcription with real-time sync playback',
     tech: ['Python', 'Javascript'],
     github: 'https://github.com/username/transcribe-read-aloud'
   },
   {
     id: 2,
     title: 'Floater',
-    description: 'A Chrome extension enables users to float any websites',
+    description: 'Chrome extension for floating any website',
     tech: ['Python', 'Javascript'],
     github: 'https://github.com/username/floater'
   }
