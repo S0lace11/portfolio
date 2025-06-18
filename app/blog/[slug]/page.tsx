@@ -4,7 +4,9 @@ import Navigation from '@/components/Navigation'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { Clock, Calendar, ArrowLeft, Tag } from 'lucide-react'
+import remarkGfm from 'remark-gfm'
+import { Clock, Calendar, ArrowLeft } from 'lucide-react'
+import CodeBlock from '@/components/ui/CodeBlock'
 
 interface Props {
   params: Promise<{
@@ -75,7 +77,7 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* Article Header */}
         <header className="mb-8">
-          <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
+          <div className="flex items-center gap-4 mb-6 text-sm text-gray-500">
             <span className="bg-pink-100 text-pink-600 px-3 py-1 rounded-full font-medium">
               {getCategoryName(post.category)}
             </span>
@@ -87,42 +89,40 @@ export default async function BlogPostPage({ params }: Props) {
               <Clock className="h-4 w-4" />
               <span>{getReadingTimeText(post.readingTime)}</span>
             </div>
-            {post.featured && (
-              <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-medium">
-                推荐
-              </span>
-            )}
           </div>
 
-          <h1 className="text-3xl font-bold mb-4" style={{ color: '#ff4566' }}>
+          <h1 className="text-3xl font-bold mb-8" style={{ color: '#ff4566' }}>
             {post.title}
           </h1>
-
-          <p className="text-lg text-gray-600 leading-relaxed">
-            {post.description}
-          </p>
-
-          {post.tags.length > 0 && (
-            <div className="flex items-center gap-2 mt-6">
-              <Tag className="h-4 w-4 text-gray-400" />
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-full"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
         </header>
 
         {/* Article Content */}
-        <article className="prose prose-lg prose-pink max-w-none">
+        <article className="max-w-none">
           <div className="markdown-content">
-            <MDXRemote source={post.content} />
+            <MDXRemote 
+              source={post.content} 
+              options={{
+                mdxOptions: {
+                  remarkPlugins: [remarkGfm],
+                }
+              }}
+              components={{
+                pre: ({ children, ...props }: any) => {
+                  // 检查是否是代码块
+                  if (children && typeof children === 'object' && children.props) {
+                    const codeElement = children
+                    if (codeElement.props.className && codeElement.props.className.includes('language-')) {
+                      return (
+                        <CodeBlock className={codeElement.props.className}>
+                          {codeElement.props.children}
+                        </CodeBlock>
+                      )
+                    }
+                  }
+                  return <pre {...props}>{children}</pre>
+                }
+              }}
+            />
           </div>
         </article>
 

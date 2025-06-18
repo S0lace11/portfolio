@@ -12,6 +12,7 @@ export interface Post {
   content: string
   readingTime: number
   featured?: boolean
+  excerpt: string
 }
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
@@ -22,6 +23,32 @@ function calculateReadingTime(content: string): number {
   const wordCount = content.split(/\s+/).length
   const readingTime = Math.ceil(wordCount / wordsPerMinute)
   return Math.max(1, readingTime) // 至少1分钟
+}
+
+// 提取文章的第一段落
+function extractFirstParagraph(content: string): string {
+  // 移除frontmatter
+  const contentWithoutFrontmatter = content.replace(/^---[\s\S]*?---\n/, '')
+  
+  // 移除标题（以#开头的行）
+  const lines = contentWithoutFrontmatter.split('\n')
+  const contentLines = lines.filter(line => !line.trim().startsWith('#') && line.trim() !== '')
+  
+  // 找到第一个非空段落
+  for (const line of contentLines) {
+    const trimmed = line.trim()
+    if (trimmed && !trimmed.startsWith('```') && !trimmed.startsWith('|')) {
+      // 移除markdown语法标记
+      return trimmed
+        .replace(/\*\*(.*?)\*\*/g, '$1') // 移除粗体
+        .replace(/\*(.*?)\*/g, '$1')     // 移除斜体
+        .replace(/`(.*?)`/g, '$1')       // 移除代码标记
+        .replace(/\[(.*?)\]\(.*?\)/g, '$1') // 移除链接，保留文字
+        .substring(0, 200) // 限制长度
+    }
+  }
+  
+  return '暂无内容摘要'
 }
 
 // 获取所有文章
@@ -57,7 +84,8 @@ export function getAllPosts(): Post[] {
         tags: data.tags || [],
         content,
         readingTime: calculateReadingTime(content),
-        featured: data.featured || false
+        featured: data.featured || false,
+        excerpt: extractFirstParagraph(content)
       }
 
       allPosts.push(post)
