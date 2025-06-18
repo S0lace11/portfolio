@@ -107,14 +107,14 @@ export default async function BlogPostPage({ params }: Props) {
                 }
               }}
               components={{
-                pre: ({ children, ...props }: any) => {
+                pre: ({ children, ...props }: { children?: React.ReactNode; [key: string]: unknown }) => {
                   // 检查是否是代码块
-                  if (children && typeof children === 'object' && children.props) {
-                    const codeElement = children
-                    if (codeElement.props.className && codeElement.props.className.includes('language-')) {
+                  if (children && typeof children === 'object' && children !== null && 'props' in children) {
+                    const codeElement = children as React.ReactElement<{ className?: string; children?: React.ReactNode }>
+                    if (codeElement.props?.className && codeElement.props.className.includes('language-')) {
                       return (
                         <CodeBlock className={codeElement.props.className}>
-                          {codeElement.props.children}
+                          {codeElement.props.children as string}
                         </CodeBlock>
                       )
                     }
