@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:with-content": "node scripts/fetch-content.js && next build",
+    "fetch-content": "node scripts/fetch-content.js",
+    "test-fetch": "node scripts/test-fetch.js",
     "start": "next start",
     "lint": "next lint"
   },
