@@ -3,12 +3,8 @@
 # dependencies
 /node_modules
 /.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+.pnp.js
+.yarn/install-state.gz
 
 # testing
 /coverage
@@ -28,10 +24,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# local env files
+.env*.local
 
 # vercel
 .vercel
@@ -39,3 +34,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 排除内容目录和图片 - 隐私保护
+/content/posts/
+/public/images/posts/
+
+# 保留示例文件和配置
+!/content/posts/.gitkeep
+!/public/images/posts/.gitkeep
+
+# 飞书同步配置（可能包含敏感信息）
+/scripts/feishu-docs-config.json
+!/scripts/feishu-docs-config.example.json
+
+项目规划.md
