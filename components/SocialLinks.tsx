@@ -8,6 +8,7 @@ interface SocialLink {
   href: string
   bgColor: string
   textColor: string
+  tooltip: string
 }
 
 const socialLinks: SocialLink[] = [
@@ -17,7 +18,8 @@ const socialLinks: SocialLink[] = [
     icon: 'Github',
     href: 'https://github.com/S0lace11',
     bgColor: 'bg-pink-50 hover:bg-pink-100',
-    textColor: 'text-pink-600'
+    textColor: 'text-pink-600',
+    tooltip: 'Check out my GitHub projects'
   },
   {
     name: 'Twitter',
@@ -25,15 +27,17 @@ const socialLinks: SocialLink[] = [
     icon: 'Twitter',
     href: 'https://twitter.com/S0lace11',
     bgColor: 'bg-pink-50 hover:bg-pink-100',
-    textColor: 'text-pink-600'
+    textColor: 'text-pink-600',
+    tooltip: 'Follow me on Twitter'
   },
   {
     name: 'WeChat',
     username: 'Contact me',
     icon: 'MessageCircle',
-    href: '#',
+    href: 'https://mp.weixin.qq.com/s/UJ-qOBn4MiyQVk3gxGvRzA',
     bgColor: 'bg-pink-50 hover:bg-pink-100',
-    textColor: 'text-pink-600'
+    textColor: 'text-pink-600',
+    tooltip: 'Follow my WeChat Official Account'
   }
 ]
 
@@ -66,6 +70,7 @@ export default function SocialLinks() {
             transition-all duration-200 hover:border-pink-300 hover:shadow-md hover:scale-105
             flex items-center gap-3 min-w-[160px]
           `}
+          title={link.tooltip}
         >
           <div className="bg-pink-100 p-2 rounded-full text-pink-600 flex-shrink-0">
             {renderIcon(link.icon)}
